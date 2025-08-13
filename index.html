@@ -1,66 +1,21 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ميني آب البكالوريا</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to bottom, #6a11cb, #2575fc);
-            color: #fff;
-            text-align: center;
-        }
-        header {
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            background: rgba(0,0,0,0.2);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        .subjects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            padding: 20px;
-        }
-        .subject-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 20px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: transform 0.3s, background 0.3s;
-        }
-        .subject-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.2);
-        }
-        .quiz {
-            background: rgba(255,255,255,0.1);
-            margin: 20px auto;
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 500px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .correct { background-color: #4caf50; color: #fff; }
-        .wrong { background-color: #f44336; color: #fff; }
-        footer {
-            margin: 20px;
-            font-size: 14px;
-            color: #ccc;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ميني آب البكالوريا</title>
+<style>
+body { font-family: 'Arial', sans-serif; margin:0; padding:0; background: linear-gradient(to bottom, #6a11cb, #2575fc); color:#fff; text-align:center;}
+header {padding:20px; font-size:24px; font-weight:bold; background: rgba(0,0,0,0.2);}
+.subjects {display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:15px; padding:20px;}
+.subject-card {background: rgba(255,255,255,0.1); border-radius:12px; padding:20px; font-size:18px; cursor:pointer; transition:0.3s;}
+.subject-card:hover {transform:translateY(-5px); background: rgba(255,255,255,0.2);}
+.quiz, .sorting-game {background: rgba(255,255,255,0.1); margin:20px auto; padding:20px; border-radius:12px; max-width:500px;}
+button {padding:10px 20px; margin:10px; border:none; border-radius:8px; cursor:pointer; font-size:16px;}
+.correct {background-color:#4caf50; color:#fff;}
+.wrong {background-color:#f44336; color:#fff;}
+footer {margin:20px; font-size:14px; color:#ccc;}
+</style>
 </head>
 <body>
 
@@ -72,24 +27,55 @@
     <div class="subject-card" onclick="alert('دروس الفلسفة ستضاف قريبًا!')">💡 الفلسفة</div>
 </div>
 
+<!-- Quiz -->
 <div class="quiz">
-    <h2>📝 كويز تجريبي: الرياضيات</h2>
-    <p>ما هو ناتج 5 × 6؟</p>
-    <button class="correct" onclick="checkAnswer(true)">30 ✅</button>
-    <button class="wrong" onclick="checkAnswer(false)">25 ❌</button>
-    <button class="wrong" onclick="checkAnswer(false)">35 ❌</button>
+<h2>📝 كويز تجريبي: الرياضيات</h2>
+<p>ما هو ناتج 5 × 6؟</p>
+<button class="correct" onclick="checkAnswer(true)">30 ✅</button>
+<button class="wrong" onclick="checkAnswer(false)">25 ❌</button>
+<button class="wrong" onclick="checkAnswer(false)">35 ❌</button>
+</div>
+
+<!-- Sorting Game -->
+<div class="sorting-game">
+<h2>🎯 رتب خطوات حل المسألة:</h2>
+<p>حل 2x + 3 = 7</p>
+<div id="steps">
+  <button onclick="move(this)">2x + 3 = 7</button>
+  <button onclick="move(this)">2x = 7 - 3</button>
+  <button onclick="move(this)">2x = 4</button>
+  <button onclick="move(this)">x = 2</button>
+</div>
+<button onclick="checkOrder()">تحقق من الترتيب</button>
 </div>
 
 <footer>© 2025 - بوت البكالوريا</footer>
 
 <script>
-    function checkAnswer(isCorrect) {
-        if (isCorrect) {
-            alert("✅ إجابة صحيحة! أحسنت.");
-        } else {
-            alert("❌ إجابة خاطئة! حاول مرة أخرى.");
-        }
-    }
+function checkAnswer(isCorrect){
+    if(isCorrect){alert("✅ إجابة صحيحة! أحسنت.");} 
+    else {alert("❌ إجابة خاطئة! حاول مرة أخرى.");}
+}
+
+// Sorting Game
+let selected = [];
+function move(btn){
+  if(selected.includes(btn.innerText)){
+    selected = selected.filter(x=>x!==btn.innerText);
+    btn.style.backgroundColor='';
+  } else {
+    selected.push(btn.innerText);
+    btn.style.backgroundColor='#6a11cb';
+  }
+}
+function checkOrder(){
+  const correctOrder=["2x + 3 = 7","2x = 7 - 3","2x = 4","x = 2"];
+  if(JSON.stringify(selected)===JSON.stringify(correctOrder)){
+    alert("✅ ممتاز! الترتيب صحيح");
+  } else {
+    alert("❌ ترتيب خاطئ! حاول مرة أخرى");
+  }
+}
 </script>
 
 </body>
