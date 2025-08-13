@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دروس وملخصات البكالوريا</title>
+    <title>ميني آب البكالوريا</title>
     <style>
         body {
-            font-family: 'Tahoma', sans-serif;
-            background: linear-gradient(to bottom, #f9f9f9, #e0f7fa);
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
+            background: linear-gradient(to bottom, #6a11cb, #2575fc);
+            color: #fff;
             text-align: center;
         }
         header {
-            background: #00acc1;
-            color: white;
-            padding: 15px;
-            font-size: 22px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
         .subjects {
             display: grid;
@@ -25,46 +26,69 @@
             gap: 15px;
             padding: 20px;
         }
-        .subject {
-            background: white;
+        .subject-card {
+            background: rgba(255,255,255,0.1);
             border-radius: 12px;
             padding: 20px;
             font-size: 18px;
-            font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: 0.3s;
+            transition: transform 0.3s, background 0.3s;
         }
-        .subject:hover {
+        .subject-card:hover {
             transform: translateY(-5px);
-            background: #b2ebf2;
+            background: rgba(255,255,255,0.2);
         }
+        .quiz {
+            background: rgba(255,255,255,0.1);
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 500px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .correct { background-color: #4caf50; color: #fff; }
+        .wrong { background-color: #f44336; color: #fff; }
         footer {
-            padding: 10px;
+            margin: 20px;
             font-size: 14px;
-            color: #555;
-            margin-top: 20px;
+            color: #ccc;
         }
     </style>
 </head>
 <body>
 
-<header>📚 دروس وملخصات البكالوريا</header>
+<header>📚 ميني آب البكالوريا</header>
 
 <div class="subjects">
-    <div class="subject" onclick="showLessons('رياضيات')">📐 الرياضيات</div>
-    <div class="subject" onclick="showLessons('فيزياء')">⚡ الفيزياء</div>
-    <div class="subject" onclick="showLessons('فلسفة')">💡 الفلسفة</div>
-    <div class="subject" onclick="showLessons('علوم')">🧬 العلوم</div>
-    <div class="subject" onclick="showLessons('لغة عربية')">📝 اللغة العربية</div>
-    <div class="subject" onclick="showLessons('لغة إنجليزية')">📖 الإنجليزية</div>
+    <div class="subject-card" onclick="alert('دروس الرياضيات ستضاف قريبًا!')">📐 الرياضيات</div>
+    <div class="subject-card" onclick="alert('دروس الفيزياء ستضاف قريبًا!')">⚡ الفيزياء</div>
+    <div class="subject-card" onclick="alert('دروس الفلسفة ستضاف قريبًا!')">💡 الفلسفة</div>
+</div>
+
+<div class="quiz">
+    <h2>📝 كويز تجريبي: الرياضيات</h2>
+    <p>ما هو ناتج 5 × 6؟</p>
+    <button class="correct" onclick="checkAnswer(true)">30 ✅</button>
+    <button class="wrong" onclick="checkAnswer(false)">25 ❌</button>
+    <button class="wrong" onclick="checkAnswer(false)">35 ❌</button>
 </div>
 
 <footer>© 2025 - بوت البكالوريا</footer>
 
 <script>
-    function showLessons(subject) {
-        alert("📚 سيتم عرض دروس مادة " + subject + " هنا قريبًا!");
+    function checkAnswer(isCorrect) {
+        if (isCorrect) {
+            alert("✅ إجابة صحيحة! أحسنت.");
+        } else {
+            alert("❌ إجابة خاطئة! حاول مرة أخرى.");
+        }
     }
 </script>
 
