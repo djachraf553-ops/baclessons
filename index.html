@@ -1,274 +1,214 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎓 نُــــخبــــة الهـــــمّــــــة...</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+<!DOCTYPE html>  
+<html lang="ar" dir="rtl">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>🎓 نُــــخبــــة الهـــــمّــــــة</title>  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">  
+<style>  
+  body {  
+    font-family: 'Tajawal', sans-serif;  
+    margin: 0;  
+    height: 100vh;  
+    overflow-x: hidden;  
+  }  
+  
+  /* شاشة الانتظار الحديثة */  
+  #loadingScreen {  
+    position: fixed;  
+    top:0; left:0;  
+    width: 100%; height: 100%;  
+    display: flex;  
+    flex-direction: column;  
+    justify-content: center;  
+    align-items: center;  
+    background: linear-gradient(135deg,#667eea,#764ba2,#f6d365,#fda085);  
+    background-size: 400% 400%;  
+    animation: gradientBG 10s ease infinite;  
+    z-index: 2000;  
+  }  
+  
+  @keyframes gradientBG {  
+    0%{background-position:0% 50%}  
+    50%{background-position:100% 50%}  
+    100%{background-position:0% 50%}  
+  }  
+  
+  .loading-icon {  
+    font-size:4em;  
+    margin-bottom: 15px;  
+    animation: bounce 1.2s infinite;  
+  }  
+  @keyframes bounce { 0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)} }  
+  
+  .loading-title { font-size:2em; font-weight:bold; margin-bottom:5px; color:white; }  
+  .loading-msg { font-size:1.3em; font-family: 'Pacifico', cursive; color:white; }  
+  
+  /* دوائر متحركة */  
+  .circle {  
+    position: absolute;  
+    border-radius: 50%;  
+    background: rgba(255,255,255,0.2);  
+    animation: float 6s linear infinite;  
+  }  
+  @keyframes float {  
+    0%{transform:translateY(100vh) scale(0.5)}  
+    100%{transform:translateY(-200px) scale(1)}  
+  }  
+  
+  /* شاشة المواد */  
+  #materialsScreen {  
+    display: none;  
+    flex-direction: column;  
+    align-items: center;  
+    min-height: 100vh;  
+    padding-bottom: 20px;  
+    background: linear-gradient(120deg,#c2e9fb,#a1c4fd);  
+    background-size: 400% 400%;  
+    animation: bgAnim2 12s ease infinite;  
+  }  
+  @keyframes bgAnim2 {  
+    0% {background-position:0% 50%}  
+    50% {background-position:100% 50%}  
+    100% {background-position:0% 50%}  
+  }  
+  
+  header {  
+    padding: 15px;  
+    flex-shrink: 0;  
+    text-align: center;  
+  }  
+  .user-img {  
+    width: 90px; height: 90px;  
+    border-radius: 50%;  
+    object-fit: cover;  
+    margin-bottom: 10px;  
+    animation: shake 1.5s infinite;  
+  }  
+  @keyframes shake {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}  
+  
+  .icons {  
+    display: flex;  
+    justify-content: center;  
+    flex-wrap: wrap;  
+    margin: 10px auto;  
+    gap: 15px;  
+  }  
+  
+  .icon-card {  
+    border-radius: 20px;  
+    padding: 20px;  
+    width: 120px; height:120px;  
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);  
+    cursor: pointer;  
+    text-align: center;  
+    color: white;  
+    font-weight: bold;  
+    display: flex;  
+    flex-direction: column;  
+    justify-content: center;  
+    align-items: center;  
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  
+    font-size: 0.9em;  
+  }  
+  .icon-card i { font-size: 36px; margin-bottom: 8px; }  
+  
+  .icon-card:hover {  
+    transform: scale(1.1) rotate(5deg);  
+    box-shadow: 0 12px 24px rgba(0,0,0,0.25);  
+  }  
+  
+  .icon-card:active {  
+    transform: scale(1.3) rotate(10deg);  
+    transition: transform 0.2s ease;  
+  }  
+  
+  /* ألوان المواد */  
+  .arabic{background:#ff9800;}          
+  .philosophy{background:#9c27b0;}          
+  .history{background:#795548;}          
+  .geo{background:#4caf50;}          
+  .sharia{background:#2e7d32;}          
+  .math{background:#b71c1c;}          
+  .lessons{background:#2196f3;}          
+  .exercises{background:#009688;}          
+  .review{background:#673ab7;}          
+  .tips{background:#607d8b;}          
+  
+  footer {  
+    text-align: center;  
+    font-size: 0.9em;  
+    padding: 10px;  
+    opacity: 0.8;  
+    font-family: 'Pacifico', cursive;  
+  }  
+</style>  
+</head>  
+<body>  
+  
+<!-- شاشة الانتظار الحديثة -->  
+<div id="loadingScreen">  
+  <div class="loading-icon">🎓</div>  
+  <div class="loading-title">نُــــخبــــة الهـــــمّــــــة </div>  
+  <div class="loading-msg">مرحبًا بك، ACHRAF!</div>  
+  <!-- دوائر متحركة -->  
+  <div class="circle" style="width:40px;height:40px;left:10%;animation-delay:0s;"></div>  
+  <div class="circle" style="width:30px;height:30px;left:50%;animation-delay:2s;"></div>  
+  <div class="circle" style="width:50px;height:50px;left:80%;animation-delay:1s;"></div>  
+</div>  
+  
+<!-- شاشة المواد -->  
+<div id="materialsScreen">  
+  <header>  
+    <img src="https://i.pravatar.cc/150?img=12" class="user-img" alt="ACHRAF">  
+    <h2>مرحبًا ACHRAF</h2>  
+    <p>اختر المادة للبدء بالتعلم</p>  
+  </header>  
+  
+  <section class="icons">  
+    <div class="icon-card lessons" onclick="sendToBot('الدروس')"><i class="fas fa-book"></i>الدروس</div>  
+    <div class="icon-card exercises" onclick="sendToBot('التمارين')"><i class="fas fa-pencil-alt"></i>التمارين</div>  
+    <div class="icon-card review" onclick="sendToBot('المراجعة')"><i class="fas fa-chalkboard-teacher"></i>المراجعة</div>  
+    <div class="icon-card tips" onclick="sendToBot('نصائح')"><i class="fas fa-graduation-cap"></i>نصائح</div>  
+    <div class="icon-card arabic" onclick="sendToBot('العربية')"><i class="fas fa-feather-alt"></i>العربية</div>  
+    <div class="icon-card philosophy" onclick="sendToBot('الفلسفة')"><i class="fas fa-brain"></i>الفلسفة</div>  
+    <div class="icon-card history" onclick="sendToBot('التاريخ')"><i class="fas fa-landmark"></i>التاريخ</div>  
+    <div class="icon-card geo" onclick="sendToBot('الجغرافيا')"><i class="fas fa-globe-africa"></i>الجغرافيا</div>  
+    <div class="icon-card sharia" onclick="sendToBot('الشريعة')"><i class="fas fa-star-and-crescent"></i>الشريعة</div>  
+    <div class="icon-card math" onclick="sendToBot('الرياضيات')"><i class="fas fa-square-root-alt"></i>الرياضيات</div>  
+  </section>  
+  
+  <footer>© ACHRAF</footer>  
+</div>  
+  
+<script>  
+  // الانتقال من شاشة الانتظار إلى شاشة المواد بعد 3 ثواني  
+  setTimeout(() => {  
+    document.getElementById("loadingScreen").style.display = "none";  
+    document.getElementById("materialsScreen").style.display = "flex";  
+  }, 3000);  
+  
+  // وظيفة إرسال المادة للبوت مع تغيير لون ديناميكي  
+  function sendToBot(subject) {  
+    const card = Array.from(document.querySelectorAll('.icon-card')).find(c => c.innerText.includes(subject));  
+    const originalColor = card.style.backgroundColor || window.getComputedStyle(card).backgroundColor;  
+    // تغيير اللون إلى مزيج برتقالي-أزرق مريح  
+    card.style.transition = 'background 0.3s ease, transform 0.3s ease';  
+    card.style.background = 'linear-gradient(45deg, #ff9800, #ffe082)';  
+    card.style.transform = 'scale(1.2)';  
+    // إعادة اللون الأصلي بعد 400 مللي ثانية  
+    setTimeout(() => {  
+      card.style.background = originalColor;  
+      card.style.transform = '';  
+    }, 400);  
 
-<style>
-body {
-  font-family: 'Tajawal', sans-serif;
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(270deg, #a8edea, #fed6e3, #c1f0c1);
-  background-size: 600% 600%;
-  animation: bgAnimation 12s ease infinite;
-  color: #333;
-  overflow-x: hidden;
-}
-@keyframes bgAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* شاشة الانتظار */
-#loadingScreen {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, #4cafef, #673ab7);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 1.5em;
-  z-index: 2000;
-}
-.loading-icon {
-  font-size: 3em;
-  margin-bottom: 10px;
-  animation: bounce 1.2s infinite;
-}
-@keyframes bounce {
-  0%, 100% { transform: translateY(0);}
-  50% { transform: translateY(-10px);}
-}
-.loading-title {
-  font-size: 1.8em;
-  font-weight: bold;
-  white-space: nowrap;
-  border-right: 2px solid white;
-  overflow: hidden;
-  animation: typing 3s steps(25) forwards, blink 0.6s infinite;
-}
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-@keyframes blink {
-  50% { border-color: transparent }
-}
-.loading-name {
-  font-family: 'Pacifico', cursive;
-  font-size: 1.2em;
-  margin-top: 8px;
-  opacity: 0.9;
-}
-
-/* الهيدر */
-header {
-  padding: 15px;
-  background: rgba(255,255,255,0.3);
-  flex-shrink: 0;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  text-align: center;
-}
-header h1 {
-  margin: 0;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-header p {
-  font-size: 0.9em;
-}
-#timer {
-  font-size: 0.8em;
-  margin-top: 4px;
-  opacity: 0.8;
-}
-
-/* البطاقات */
-.icons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 10px auto;
-  gap: 12px;
-  flex: 1;
-}
-.icon-card {
-  border-radius: 20px;
-  padding: 15px;
-  width: 110px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  cursor: pointer;
-  text-align: center;
-  transition: transform 0.3s ease;
-  color: white;
-  font-weight: bold;
-}
-.icon-card:hover {
-  transform: scale(1.05);
-}
-.icon-card i {
-  font-size: 35px;
-  margin-bottom: 8px;
-}
-
-/* ألوان المواد */
-
-.arabic { background: #ff9800; }
-.philosophy { background: #9c27b0; }
-.history { background: #795548; }
-.geo { background: #4caf50; }
-.sharia { background: #2e7d32; }
-.math { background: #b71c1c; }
-.lessons { background: #2196f3; }
-.exercises { background: #009688; }
-.review { background: #673ab7; }
-.tips { background: #607d8b; }
-
-/* Popup */
-.popup {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-.popup-content {
-  background: white;
-  padding: 20px;
-  border-radius: 20px;
-  max-width: 320px;
-  text-align: center;
-  animation: pop 0.4s ease-out;
-}
-@keyframes pop {
-  0% { transform: scale(0.5); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-.popup-content h2 {
-  margin: 0 0 10px;
-  font-size: 1.2em;
-  font-weight: bold;
-}
-.lesson-btn {
-  display: block;
-  background: #4cafef;
-  color: white;
-  padding: 10px;
-  margin: 6px 0;
-  border-radius: 15px;
-  text-decoration: none;
-}
-.lesson-btn:hover {
-  background: #2196f3;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  font-size: 0.8em;
-  padding: 10px;
-  opacity: 0.8;
-  font-family: 'Pacifico', cursive;
-}
-</style>
-</head>
-<body>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-<!-- شاشة الانتظار -->
-<div id="loadingScreen">
-  <div class="loading-icon">🎓</div>
-  <div class="loading-title">نُــــخبــــة الهـــــمّــــــة ✍🏻</div>
-  <div class="loading-name">ACHRAF</div>
-</div>
-
-<header>
-  <h1>🎓 نُــــخبــــة الهـــــمّــــــة ✍🏻</h1>
-  <p>منصة دروس وملخصات البكالوريا بروح الإبداع</p>
-  <div id="timer">الوقت المنقضي: 0 ثانية</div>
-</header>
-
-<section class="icons">
-  <div class="icon-card lessons" onclick="openLessons('الدروس',['الدرس 1','الدرس 2'])"><i class="fas fa-book"></i>الدروس</div>
-  <div class="icon-card exercises" onclick="openLessons('التمارين',['تمرين 1','تمرين 2'])"><i class="fas fa-pencil-alt"></i>التمارين</div>
-  <div class="icon-card review" onclick="openLessons('المراجعة',['ملخص 1','ملخص 2'])"><i class="fas fa-chalkboard-teacher"></i>المراجعة</div>
-  <div class="icon-card tips"><i class="fas fa-graduation-cap"></i>نصائح</div>
-  <div class="icon-card arabic" onclick="openLessons('اللغة العربية',[ملخص_الادب_العربي_من_اعداد_خالد_حماش.pdf.','النحو'])"><i class="fas fa-feather-alt"></i>العربية</div>
-  <div class="icon-card philosophy" onclick="openLessons('الفلسفة',['دروس الفلسفة','منهجيات الفلسفة','دروس الفلسفة.pdf '])"><i class="fas fa-brain"></i>الفلسفة</div>
-  <div class="icon-card history" onclick="openLessons('التاريخ',['الحرب الباردة','الحرب '])"><i class="fas fa-landmark"></i>التاريخ</div>
-  <div class="icon-card geo" onclick="openLessons('الجغرافيا',['المناخ','التضاريس'])"><i class="fas fa-globe-africa"></i>الجغرافيا</div>
-  <div class="icon-card sharia" onclick="openLessons('الشريعة',['الفقه','العقيدة'])"><i class="fas fa-star-and-crescent"></i>الشريعة</div>
-  <div class="icon-card math" onclick="openLessons('الرياضيات',['الدوال','الإحصاء'])"><i class="fas fa-square-root-alt"></i>الرياضيات</div>
-</section>
-
-<div class="popup" id="popup">
-  <div class="popup-content" id="popupContent"></div>
-</div>
-
-<footer>
-  © ACHRAF
-</footer>
-
-<script>
-const tg = window.Telegram.WebApp;
-
-// وقت البداية
-let startTime = Date.now();
-setInterval(() => {
-  let elapsed = Math.floor((Date.now() - startTime) / 1000);
-  document.getElementById("timer").textContent = `الوقت المنقضي: ${elapsed} ثانية`;
-}, 1000);
-
-// شاشة الانتظار
-setTimeout(() => {
-  document.getElementById("loadingScreen").style.display = "none";
-}, 3000);
-
-// فتح نافذة الدروس
-function openLessons(subject, lessons) {
-  let colors = {
-    "الدروس":"#2196f3",
-    "التمارين":"#009688",
-    "المراجعة":"#673ab7",
-    "اللغة العربية":"#ff9800",
-    "الفلسفة":"#9c27b0",
-    "التاريخ":"#795548",
-    "الجغرافيا":"#4caf50",
-    "الشريعة":"#2e7d32",
-    "الرياضيات":"#b71c1c"
-  };
-  let content = `<h2 style="color:${colors[subject]};">${subject}</h2>`;
-  lessons.forEach(lesson => {
-    content += `<a href="#" class="lesson-btn">${lesson}</a>`;
-  });
-  content += `<button class="lesson-btn" style="background:${colors[subject]};" onclick="sendToBot('${subject}')">📤 إرسال إلى البوت</button>`;
-  content += `<div style="margin-top:10px;"><button class="lesson-btn" onclick="closePopup()">إغلاق</button></div>`;
-  document.getElementById("popupContent").innerHTML = content;
-  document.getElementById("popup").style.display = "flex";
-}
-
-function sendToBot(subject) {
-  tg.sendData(`اختار المستخدم: ${subject}`);
-  closePopup();
-}
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-}
-</script>
-</body>
-      </html>
+    // إرسال المادة للبوت (محاكاة)  
+    setTimeout(() => {  
+      alert('سيتم إرسال: ' + subject + ' إلى البوت');  
+    }, 300);  
+  }  
+</script>  
+  
+</body>  
+    </html>
