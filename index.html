@@ -59,56 +59,171 @@
     </p>
   </header>
 
-  <section class="icons">
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-book"></i>الدروس
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-pencil-alt"></i>التمارين
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-chalkboard-teacher"></i>المراجعة
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-graduation-cap"></i>نصائح
-    </div>
-    <div class="icon-card" onclick="downloadLesson('https://drive.google.com/uc?export=download&id=1zHq69gIvJoPaCtPO-aOAMxfPadIPkwBY')">
-      <i class="fas fa-feather-alt"></i>العربية
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-brain"></i>الفلسفة
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-landmark"></i>التاريخ
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-globe-africa"></i>الجغرافيا
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-star-and-crescent"></i>الشريعة
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-square-root-alt"></i>الرياضيات
-    </div>
-  </section>
+<section class="icons">
+  <!-- المواد الرئيسية -->
+  <div class="icon-card" onclick="showLessons('arabicLessons')">
+    <i class="fas fa-feather-alt"></i>العربية
+  </div>
+  <div class="icon-card" onclick="showLessons('philosophyLessons')">
+    <i class="fas fa-brain"></i>الفلسفة
+  </div>
+  <div class="icon-card" onclick="showLessons('historyLessons')">
+    <i class="fas fa-landmark"></i>التاريخ
+  </div>
+  <div class="icon-card" onclick="showLessons('geographyLessons')">
+    <i class="fas fa-globe-africa"></i>الجغرافيا
+  </div>
+  <div class="icon-card" onclick="showLessons('religionLessons')">
+    <i class="fas fa-star-and-crescent"></i>الشريعة
+  </div>
+  <div class="icon-card" onclick="showLessons('mathLessons')">
+    <i class="fas fa-square-root-alt"></i>الرياضيات
+  </div>
+</section>
+
+<!-- قوائم الدروس المخفية -->
+<div id="arabicLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس1_عربية')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس2_عربية')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس3_عربية')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس4_عربية')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس5_عربية')">درس 5</div>
+</div>
+
+<div id="philosophyLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_فلسفة')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_فلسفة')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_فلسفة')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_فلسفة')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_فلسفة')">درس 5</div>
+</div>
+
+<div id="historyLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_تاريخ')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_تاريخ')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_تاريخ')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_تاريخ')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_تاريخ')">درس 5</div>
+</div>
+
+<div id="geographyLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_جغرافيا')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_جغرافيا')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_جغرافيا')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_جغرافيا')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_جغرافيا')">درس 5</div>
+</div>
+
+<div id="religionLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_شريعة')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_شريعة')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_شريعة')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_شريعة')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_شريعة')">درس 5</div>
+</div>
+
+<div id="mathLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_رياضيات')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_رياضيات')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_رياضيات')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_رياضيات')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_رياضيات')">درس 5</div>
 </div>
 
 <script>
-  window.onload = () => {
-    setTimeout(() => {
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('materialsScreen').style.display = 'flex';
-    }, 3000);
-  }
+function showLessons(id) {
+  // إخفاء كل القوائم أولًا
+  document.querySelectorAll('[id$="Lessons"]').forEach(div => div.style.display = 'none');
+  // إظهار القائمة المطلوبة
+  document.getElementById(id).style.display = 'flex';
+}
 
-  function downloadLesson(url) {
-    if(url === '') {
-      alert('يرجى إضافة رابط التحميل أولاً!');
-      return;
-    }
-    window.open(url, "_blank");
-  }
-</script>
+function downloadLesson(url) {
+  window.open(url, "_blank");
+}
+  </script><section class="icons">
+  <!-- المواد الرئيسية -->
+  <div class="icon-card" onclick="showLessons('arabicLessons')">
+    <i class="fas fa-feather-alt"></i>العربية
+  </div>
+  <div class="icon-card" onclick="showLessons('philosophyLessons')">
+    <i class="fas fa-brain"></i>الفلسفة
+  </div>
+  <div class="icon-card" onclick="showLessons('historyLessons')">
+    <i class="fas fa-landmark"></i>التاريخ
+  </div>
+  <div class="icon-card" onclick="showLessons('geographyLessons')">
+    <i class="fas fa-globe-africa"></i>الجغرافيا
+  </div>
+  <div class="icon-card" onclick="showLessons('religionLessons')">
+    <i class="fas fa-star-and-crescent"></i>الشريعة
+  </div>
+  <div class="icon-card" onclick="showLessons('mathLessons')">
+    <i class="fas fa-square-root-alt"></i>الرياضيات
+  </div>
+</section>
+
+<!-- قوائم الدروس المخفية -->
+<div id="arabicLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('https://drive.google.com/uc?export=download&id=1zHq69gIvJoPaCtPO-aOAMxfPadIPkwBY')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس2_عربية')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس3_عربية')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس4_عربية')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_جوجل_درايف_درس5_عربية')">درس 5</div>
+</div>
+
+<div id="philosophyLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_فلسفة')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_فلسفة')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_فلسفة')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_فلسفة')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_فلسفة')">درس 5</div>
+</div>
+
+<div id="historyLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_تاريخ')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_تاريخ')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_تاريخ')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_تاريخ')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_تاريخ')">درس 5</div>
+</div>
+
+<div id="geographyLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_جغرافيا')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_جغرافيا')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_جغرافيا')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_جغرافيا')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_جغرافيا')">درس 5</div>
+</div>
+
+<div id="religionLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_شريعة')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_شريعة')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_شريعة')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_شريعة')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_شريعة')">درس 5</div>
+</div>
+
+<div id="mathLessons" style="display:none; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:20px;">
+  <div class="icon-card" onclick="downloadLesson('رابط_درس1_رياضيات')">درس 1</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس2_رياضيات')">درس 2</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس3_رياضيات')">درس 3</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس4_رياضيات')">درس 4</div>
+  <div class="icon-card" onclick="downloadLesson('رابط_درس5_رياضيات')">درس 5</div>
+</div>
+
+<script>
+function showLessons(id) {
+  // إخفاء كل القوائم أولًا
+  document.querySelectorAll('[id$="Lessons"]').forEach(div => div.style.display = 'none');
+  // إظهار القائمة المطلوبة
+  document.getElementById(id).style.display = 'flex';
+}
+
+function downloadLesson(url) {
+  window.open(url, "_blank");
+}
+    </scrip
 
 </body>
         </html>
