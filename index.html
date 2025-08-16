@@ -1,115 +1,710 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎓 نُــــخبــــة الهـــــمّــــــة</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
-<style>
-  body { font-family: 'Tajawal', sans-serif; margin: 0; height: 100vh; overflow-x: hidden; }
-
-  /* شاشة الانتظار */
-  #loadingScreen { position: fixed; top:0; left:0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg,#667eea,#764ba2,#f6d365,#fda085); background-size: 400% 400%; animation: gradientBG 10s ease infinite; z-index: 2000; }
-  @keyframes gradientBG { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-  .loading-icon { font-size:4em; margin-bottom: 15px; animation: bounce 1.2s infinite; }
-  @keyframes bounce { 0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)} }
-  .loading-title { font-size:2em; font-weight:bold; margin-bottom:5px; color:white; }
-  .loading-msg { font-size:1.3em; font-weight:500; color:white; text-align:center; }
-  .loader-bar { margin-top: 20px; width: 200px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 5px; overflow: hidden; }
-  .loader-progress { width: 0; height: 100%; background: white; animation: loading 3s linear forwards; }
-  @keyframes loading { 0%{width:0%}100%{width:100%} }
-  .circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.2); animation: float 6s linear infinite; }
-  @keyframes float { 0%{transform:translateY(100vh) scale(0.5)} 100%{transform:translateY(-200px) scale(1)} }
-
-  /* شاشة المواد */
-  #materialsScreen { display: none; flex-direction: column; align-items: center; min-height: 100vh; padding-bottom: 20px; background: linear-gradient(120deg,#c2e9fb,#a1c4fd,#d4fc79,#96e6a1); background-size: 400% 400%; animation: bgAnim2 12s ease infinite; }
-  @keyframes bgAnim2 { 0% {background-position:0% 50%} 50% {background-position:100% 50%} 100% {background-position:0% 50%} }
-  header { padding: 15px; flex-shrink: 0; text-align: center; }
-  .user-img { font-size:2.5em; margin-bottom: 10px; animation: shake 1.5s infinite; }
-  @keyframes shake {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
-  .icons { display: flex; justify-content: center; flex-wrap: wrap; margin: 10px auto; gap: 15px; }
-  .icon-card { border-radius: 20px; padding: 20px; width: 120px; height:120px; box-shadow: 0 6px 12px rgba(0,0,0,0.15); cursor: pointer; text-align: center; color: white; font-weight: bold; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease; font-size: 0.9em; position: relative; overflow: hidden; background: linear-gradient(45deg,#64b5f6,#81c784); }
-  .icon-card i { font-size: 36px; margin-bottom: 8px; }
-  .icon-card:hover { transform: scale(1.15) rotate(2deg); box-shadow: 0 12px 24px rgba(0,0,0,0.25); filter: brightness(1.1); }
-  .icon-card:active { transform: scale(1.1); background: linear-gradient(45deg,#ff7043,#42a5f5); }
-  .lesson-content { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); color:white; border-radius:20px; padding:10px; overflow-y:auto; text-align:center; font-size:0.8em; }
-  footer { text-align: center; font-size: 0.9em; padding: 10px; opacity: 0.8; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini App - بكالوريا</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+        
+        /* Dark mode styles */
+        .dark {
+            --tw-bg-opacity: 1;
+            background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+            color: rgb(229 231 235 / var(--tw-text-opacity));
+        }
+        .dark .bg-white {
+            background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+        }
+        .dark .text-gray-800 {
+            color: rgb(229 231 235 / var(--tw-text-opacity));
+        }
+        .dark .bg-gray-100 {
+            background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+        }
+        .dark .bg-gray-50 {
+            background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+        }
+        .dark .border-blue-100 {
+            border-color: rgb(55 65 81 / var(--tw-border-opacity));
+        }
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.5s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto px-4 py-6 max-w-3xl">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl p-6 mb-6 shadow-lg">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold">نُــــخبــــة الهـــــمّــــــة🫆</h1>
+                    <p class="opacity-90">أهلاً بك في تطبيق التحضير للبكالوريا الأدبية</p>
+                </div>
+                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
+                    <i class="fas fa-graduation-cap text-3xl text-purple-600"></i>
+                </div>
+            </div>
+        </header>
 
-<!-- شاشة الانتظار -->
-<div id="loadingScreen">
-  <div class="loading-icon">🎓</div>
-  <div class="loading-title">نُــــخبــــة الهـــــمّــــــة©</div>
-  <div class="loading-msg">مرحبًا بك في رحلتك نحو التفوق!<br>استعد لتحقيق أفضل نتائج في البكالوريا 🚀</div>
-  <div class="loader-bar"><div class="loader-progress"></div></div>
-  <div class="circle" style="width:40px;height:40px;left:10%;animation-delay:0s;"></div>
-  <div class="circle" style="width:30px;height:30px;left:50%;animation-delay:2s;"></div>
-  <div class="circle" style="width:50px;height:50px;left:80%;animation-delay:1s;"></div>
-</div>
+        <!-- Countdown Section -->
+        <section class="bg-white rounded-xl p-6 mb-6 shadow-md">
+            <h2 class="text-xl font-bold mb-4 text-blue-600 border-b-2 border-blue-100 pb-2">العد التنازلي للبكالوريا</h2>
+            <div class="flex flex-col items-center">
+                <div class="relative w-48 h-48 mb-4">
+                    <svg class="w-full h-full" viewBox="0 0 100 100">
+                        <circle class="text-gray-200" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+                        <circle class="progress-ring__circle text-purple-600" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <div id="countdown-days" class="text-3xl font-bold text-purple-700">00</div>
+                        <div class="text-gray-500">يوم</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-2 w-full text-center">
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <div id="countdown-hours" class="text-xl font-bold text-blue-600">00</div>
+                        <div class="text-sm text-gray-500">ساعة</div>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <div id="countdown-minutes" class="text-xl font-bold text-blue-600">00</div>
+                        <div class="text-sm text-gray-500">دقيقة</div>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <div id="countdown-seconds" class="text-xl font-bold text-blue-600">00</div>
+                        <div class="text-sm text-gray-500">ثانية</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<!-- شاشة المواد -->
-<div id="materialsScreen">
-  <header>
-    <div class="user-img">🎓 نُــــخبــــة الهـــــمّــــــة©</div>
-    <p style="font-weight:600; font-size:1.2em; line-height:1.4; color:#333; max-width:300px; margin:0 auto;">
-      مرحبًا بك في رحلتك نحو التفوق! 💡<br>ركز واجتهد، النجاح أمامك!
-    </p>
-  </header>
+        <!-- Study Materials -->
+        <section class="bg-white rounded-xl p-6 mb-6 shadow-md">
+            <h2 class="text-xl font-bold mb-4 text-blue-600 border-b-2 border-blue-100 pb-2">المواد الدراسية</h2>
+            <div class="grid grid-cols-3 gap-4">
+                <!-- Subject Cards -->
+                <div class="flip-card bg-blue-50 rounded-lg overflow-hidden h-32">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front flex flex-col items-center justify-center p-4">
+                            <i class="fas fa-quran text-3xl text-blue-600 mb-2"></i>
+                            <h3 class="font-bold text-black">اللغة العربية</h3>
+                        </div>
+                        <div class="flip-card-back bg-blue-600 text-white flex flex-col items-center justify-center p-4">
+                            <p class="text-sm text-center mb-2">نصوص أدبية وبلاغة ونقد</p>
+                            <button class="bg-white text-blue-600 px-3 py-1 rounded-full text-xs font-bold" onclick="showLessonContent('arabic')">إفتح</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card bg-indigo-50 rounded-lg overflow-hidden h-32">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front flex flex-col items-center justify-center p-4">
+                            <i class="fas fa-language text-3xl text-indigo-600 mb-2"></i>
+                            <h3 class="font-bold text-black">اللغة الإنجليزية</h3>
+                        </div>
+                        <div class="flip-card-back bg-indigo-600 text-white flex flex-col items-center justify-center p-4">
+                            <p class="text-sm text-center mb-2">قواعد وترجمة ونصوص إنجليزية</p>
+                            <button class="bg-white text-indigo-600 px-3 py-1 rounded-full text-xs font-bold" onclick="showLessonContent('english')">إفتح</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card bg-purple-50 rounded-lg overflow-hidden h-32">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front flex flex-col items-center justify-center p-4">
+                            <i class="fas fa-language text-3xl text-purple-600 mb-2"></i>
+                            <h3 class="font-bold text-black">اللغة الفرنسية</h3>
+                        </div>
+                        <div class="flip-card-back bg-purple-600 text-white flex flex-col items-center justify-center p-4">
+                            <p class="text-sm text-center mb-2">قواعد وترجمة ونصوص فرنسية</p>
+                            <button class="bg-white text-purple-600 px-3 py-1 rounded-full text-xs font-bold" onclick="showLessonContent('french')">إفتح</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card bg-green-50 rounded-lg overflow-hidden h-32">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front flex flex-col items-center justify-center p-4">
+                            <i class="fas fa-landmark text-3xl text-green-600 mb-2"></i>
+                            <h3 class="font-bold text-black">التاريخ والجغرافيا</h3>
+                        </div>
+                        <div class="flip-card-back bg-green-600 text-white flex flex-col items-center justify-center p-4">
+                            <p class="text-sm text-center mb-2">أحداث تاريخية ودراسات جغرافية</p>
+                            <button class="bg-white text-green-600 px-3 py-1 rounded-full text-xs font-bold" onclick="showLessonContent('history')">إفتح</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flip-card bg-red-50 rounded-lg overflow-hidden h-32">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front flex flex-col items-center justify-center p-4">
+                            <i class="fas fa-brain text-3xl text-red-600 mb-2"></i>
+                            <h3 class="font-bold text-black">الفلسفة</h3>
+                        </div>
+                        <div class="flip-card-back bg-red-600 text-white flex flex-col items-center justify-center p-4">
+                            <p class="text-sm text-center mb-2">مذاهب فلسفية ومنطق</p>
+                            <button class="bg-white text-red-600 px-3 py-1 rounded-full text-xs font-bold" onclick="showLessonContent('philosophy')">إفتح</button>
+                        </div>
+                    </div>
+                </div>
 
-  <section class="icons">
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-chalkboard-teacher"></i>اللغة الانجليزية 
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-pencil-alt"></i>التمارين
-    </div>
-    <div class="icon-card" onclick="downloadLesson('https://drive.google.com/uc?export=download&id=1eLz4tDXvujVvH7ILTT9GRKyQ3r2N31BS')">
-      <i class="fas fa-book"></i>اللغة الفرنسية     
-    </div>
-  
-   <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-graduation-cap"></i>نصائح
-    </div>
-    <div class="icon-card" onclick="downloadLesson('https://drive.google.com/uc?export=download&id=1zHq69gIvJoPaCtPO-aOAMxfPadIPkwBY')">
-      <i class="fas fa-feather-alt"></i>العربية
-    </div>
-    <div class="icon-card" onclick="downloadLesson('https://drive.google.com/uc?export=download&id=1n-ymtb5Y4Pka0pV9Vw6a2pmC6RQREYJr')">
-      <i class="fas fa-brain"></i>الفلسفة
-    </div>
-    <div class="icon-card" onclick="downloadLesson('https://drive.google.com/uc?export=download&id=1J8F9XaCeHDYVgjpsfCDz7Vn3ENi4bVVJ')">
-      <i class="fas fa-landmark"></i>التاريخ
-    </div>
-    <div class="icon-card" onclick="downloadLesson('https://drive.google.com/uc?export=download&id=1J8F9XaCeHDYVgjpsfCDz7Vn3ENi4bVVJ')">
-      <i class="fas fa-globe-africa"></i>الجغرافيا
-    </div>
-    <div class="icon-card" onclick="downloadLesson('https://drive.google.com/uc?export=download&id=1igwoQk6ERbxaru-55A-uPOggH5_j-rLK')">
-      <i class="fas fa-star-and-crescent"></i>الشريعة
-    </div>
-    <div class="icon-card" onclick="downloadLesson('')">
-      <i class="fas fa-square-root-alt"></i>الرياضيات
-    </div>
-  </section>
-</div>
+                <div class="flip-card bg-pink-50 rounded-lg overflow-hidden h-32">
+                    <div class="flip-card-inner h-full">
+                        <div class="flip-card-front flex flex-col items-center justify-center p-4">
+                            <i class="fas fa-square-root-alt text-3xl text-pink-600 mb-2"></i>
+                            <h3 class="font-bold text-black">الرياضيات</h3>
+                        </div>
+                        <div class="flip-card-back bg-pink-600 text-white flex flex-col items-center justify-center p-4">
+                            <p class="text-sm text-center mb-2">جبر وتحليل ورياضيات تطبيقية</p>
+                            <button class="bg-white text-pink-600 px-3 py-1 rounded-full text-xs font-bold" onclick="showLessonContent('math')">إفتح</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<script>
-  window.onload = () => {
-    setTimeout(() => {
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('materialsScreen').style.display = 'flex';
-    }, 3000);
-  }
+        <!-- Study Plan -->
+        <section class="bg-white rounded-xl p-6 mb-6 shadow-md">
+            <h2 class="text-xl font-bold mb-4 text-blue-600 border-b-2 border-blue-100 pb-2">خطة الدراسة - شعبة الآداب والفلسفة</h2>
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <div class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">اليوم الأول</h3>
+                        <p class="text-sm text-gray-600">اللغة العربية: النصوص الأدبية والبلاغة (3 ساعات)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">اليوم الثاني</h3>
+                        <p class="text-sm text-gray-600">الفلسفة: المنطق والمذاهب الفلسفية (2 ساعة)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">اليوم الثالث</h3>
+                        <p class="text-sm text-gray-600">التاريخ: العالم المعاصر (2 ساعة)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 30%"></div>
+                        </div>
+                    </div>
+                </div>
 
-  function downloadLesson(url) {
-    if(url === '') {
-      alert('يرجى إضافة رابط التحميل أولاً!');
-      return;
-    }
-    window.open(url, "_blank");
-  }
-</script>
+                <div class="flex items-start">
+                    <div class="bg-gray-100 text-gray-400 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">اليوم الرابع</h3>
+                        <p class="text-sm text-gray-600">الجغرافيا: التنمية والتخطيط (2 ساعة)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-gray-300 h-2 rounded-full" style="width: 15%"></div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="flex items-start">
+                    <div class="bg-gray-100 text-gray-400 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">اليوم الخامس</h3>
+                        <p class="text-sm text-gray-600">اللغة الفرنسية: القواعد والترجمة (2 ساعة)</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-gray-300 h-2 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-bold transition duration-200">
+                إضافة خطة جديدة
+            </button>
+        </section>
+
+        <!-- Exam Reminders -->
+        <section class="bg-white rounded-xl p-6 mb-6 shadow-md">
+            <h2 class="text-xl font-bold mb-4 text-blue-600 border-b-2 border-blue-100 pb-2">تذكيرات البكالوريا</h2>
+            <div class="space-y-4">
+                <div class="flex items-start bg-yellow-50 p-4 rounded-lg">
+                    <div class="bg-yellow-100 text-yellow-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">الوثائق المطلوبة</h3>
+                        <p class="text-sm text-gray-600">بطاقة الهوية - استدعاء الامتحان - أدوات الكتابة</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start bg-blue-50 p-4 rounded-lg">
+                    <div class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">مواعيد مهمة</h3>
+                        <p class="text-sm text-gray-600">الحضور قبل ساعة من الامتحان - منع التأخير</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start bg-green-50 p-4 rounded-lg">
+                    <div class="bg-green-100 text-green-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">نصائح يوم الامتحان</h3>
+                        <p class="text-sm text-gray-600">قراءة الأسئلة بتركيز - توزيع الوقت - المراجعة قبل التسليم</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section class="bg-white rounded-xl p-6 mb-6 shadow-md">
+            <h2 class="text-xl font-bold mb-4 text-blue-600 border-b-2 border-blue-100 pb-2">نصائح للنجاح في البكالوريا</h2>
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <div class="bg-yellow-100 text-yellow-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">تنظيم الوقت</h3>
+                        <p class="text-sm text-gray-600">قسّم وقتك بين المواد حسب أهميتها وصعوبتها، واحرص على أخذ فترات راحة</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-yellow-100 text-yellow-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">التركيز على النصوص</h3>
+                        <p class="text-sm text-gray-600">في المواد الأدبية، احفظ النصوص الأساسية جيداً وفهم سياقاتها</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-yellow-100 text-yellow-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">حل الامتحانات السابقة</h3>
+                        <p class="text-sm text-gray-600">تمرّن على نماذج الامتحانات السابقة لتتعرف على نمط الأسئلة</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="bg-yellow-100 text-yellow-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">المراجعة الدورية</h3>
+                        <p class="text-sm text-gray-600">خصص يوماً في الأسبوع لمراجعة ما درسته خلال الأسبوع</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="bg-yellow-100 text-yellow-600 rounded-full w-8 h-8 flex items-center justify-center mr-3 mt-1">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold">الصحة النفسية</h3>
+                        <p class="text-sm text-gray-600">احرص على النوم الكافي وممارسة الرياضة لتخفيف التوتر</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="bg-white rounded-xl p-6 mb-6 shadow-md">
+            <h2 class="text-xl font-bold mb-4 text-blue-600 border-b-2 border-blue-100 pb-2">الأدوات</h2>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-center">مجتمع الطلاب</h3>
+                </div>
+                <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-question-circle text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-center">بنك الأسئلة</h3>
+                </div>
+                <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-2">
+                        <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-center">تقييم المستوى</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Previous Exams -->
+        <section class="bg-white rounded-xl p-6 mb-6 shadow-md">
+            <h2 class="text-xl font-bold mb-4 text-blue-600 border-b-2 border-blue-100 pb-2">امتحانات سابقة</h2>
+            <div class="space-y-3 max-h-96 overflow-y-auto pr-2">
+                <!-- Arabic Language Exams -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                        <div>
+                            <h3 class="font-bold">امتحان اللغة العربية 2025</h3>
+                            <p class="text-sm text-gray-500">الدورة الرئيسية</p>
+                        </div>
+                    </div>
+                    <button class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <!-- French Language Exams -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                        <div>
+                            <h3 class="font-bold">امتحان اللغة الفرنسية 2024</h3>
+                            <p class="text-sm text-gray-500">الدورة الرئيسية</p>
+                        </div>
+                    </div>
+                    <button class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <!-- History Exams -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                        <div>
+                            <h3 class="font-bold">امتحان التاريخ 2023</h3>
+                            <p class="text-sm text-gray-500">مع التصحيح النموذجي</p>
+                        </div>
+                    </div>
+                    <button class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <!-- Geography Exams -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                        <div>
+                            <h3 class="font-bold">امتحان الجغرافيا 2022</h3>
+                            <p class="text-sm text-gray-500">الدورة الرئيسية</p>
+                        </div>
+                    </div>
+                    <button class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <!-- Philosophy Exams -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                        <div>
+                            <h3 class="font-bold">امتحان الفلسفة 2021</h3>
+                            <p class="text-sm text-gray-500">مع التصحيح</p>
+                        </div>
+                    </div>
+                    <button class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <!-- Islamic Studies Exams -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                        <div>
+                            <h3 class="font-bold">امتحان التربية الإسلامية 2020</h3>
+                            <p class="text-sm text-gray-500">الدورة الرئيسية</p>
+                        </div>
+                    </div>
+                    <button class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <!-- English Language Exams -->
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                        <div>
+                            <h3 class="font-bold">امتحان اللغة الإنجليزية 2019</h3>
+                            <p class="text-sm text-gray-500">مع التصحيح</p>
+                        </div>
+                    </div>
+                    <button class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+                
+                <!-- More exams can be added here following the same pattern -->
+                <div class="text-center py-4">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">
+                        عرض المزيد من الامتحانات (2008-2018)
+                    </button>
+                </div>
+            </div>
+            <button class="w-full mt-4 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg font-bold transition duration-200">
+                عرض المزيد
+            </button>
+        </section>
+
+        <!-- Motivation -->
+        <section class="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl p-6 shadow-lg">
+            <div class="text-center">
+                <i class="fas fa-quote-left text-2xl opacity-50 mb-4"></i>
+                <p class="text-lg mb-4" id="quote-text">"النجاح هو مجموع الجهود الصغيرة المتكررة يومياً"</p>
+                <div class="flex justify-center space-x-2">
+                    <button onclick="showQuote(0)" class="w-2 h-2 bg-white rounded-full opacity-30 quote-dot"></button>
+                    <button onclick="showQuote(1)" class="w-2 h-2 bg-white rounded-full quote-dot"></button>
+                    <button onclick="showQuote(2)" class="w-2 h-2 bg-white rounded-full opacity-30 quote-dot"></button>
+                    <button onclick="showQuote(3)" class="w-2 h-2 bg-white rounded-full opacity-30 quote-dot"></button>
+                    <button onclick="showQuote(4)" class="w-2 h-2 bg-white rounded-full opacity-30 quote-dot"></button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-2 max-w-3xl">
+            <div class="flex justify-around">
+                <button class="p-3 text-blue-600">
+                    <i class="fas fa-home text-xl"></i>
+                </button>
+                <button class="p-3 text-gray-500">
+                    <i class="fas fa-book text-xl"></i>
+                </button>
+                <button class="p-3 text-gray-500" onclick="window.open('https://t.me/your_telegram_link', '_blank')">
+                    <i class="fab fa-telegram text-xl"></i>
+                </button>
+                <button class="p-3 text-gray-500">
+                    <i class="fas fa-chart-line text-xl"></i>
+                </button>
+                <button class="p-3 text-gray-500" onclick="toggleSettings()">
+                    <i class="fas fa-cog text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold dark:text-white">الإعدادات</h3>
+                <button onclick="toggleSettings()" class="text-gray-500 dark:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="dark:text-white">الوضع الداكن</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="dark-mode-toggle" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <h4 class="font-bold mb-2 dark:text-white">مجموعة المناقشة</h4>
+                    <a href="https://t.me/BA_202C" target="_blank" class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg">
+                        <i class="fab fa-telegram mr-2"></i>
+                        انضم لمجموعتنا على تلغرام
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lesson Content Modal -->
+    <div id="lesson-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md mx-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold dark:text-white" id="lesson-title">محتوى الدرس</h3>
+                <button onclick="document.getElementById('lesson-modal').classList.add('hidden')" class="text-gray-500 dark:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="lesson-content" class="dark:text-white">
+                <!-- سيتم إضافة محتوى الدروس هنا ديناميكيًا -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات محتوى الدروس
+        const lessons = {
+            arabic: {
+                title: "اللغة العربية",
+                content: "<p>https://drive.google.com/uc?export=download&id=1zHq69gIvJoPaCtPO-aOAMxfPadIPkwBY</p>"
+            },
+            english: {
+                title: "اللغة الإنجليزية",
+                content: "<p>هنا سيتم وضع محتوى دروس اللغة الإنجليزية</p>"
+            },
+            french: {
+                title: "اللغة الفرنسية", 
+                content: "<p>https://drive.google.com/uc?export=download&id=1eLz4tDXvujVvH7ILTT9GRKyQ3r2N31BS</p>"
+            },
+            history: {
+                title: "التاريخ والجغرافيا",
+                content: "<p>https://drive.google.com/uc?export=download&id=1J8F9XaCeHDYVgjpsfCDz7Vn3ENi4bVVJ</p>"
+            },
+            philosophy: {
+                title: "الفلسفة",
+                content: "<p>https://drive.google.com/uc?export=download&id=1n-ymtb5Y4Pka0pV9Vw6a2pmC6RQREYJr</p>"
+            },
+            math: {
+                title: "الرياضيات",
+                content: "<p></p>"
+            }
+        };
+
+        // عرض محتوى الدرس
+        function showLessonContent(subject) {
+            const lesson = lessons[subject];
+            document.getElementById('lesson-title').textContent = lesson.title;
+            document.getElementById('lesson-content').innerHTML = lesson.content;
+            document.getElementById('lesson-modal').classList.remove('hidden');
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('dark-mode-toggle').checked = true;
+        }
+
+        // Settings modal toggle
+        function toggleSettings() {
+            document.getElementById('settings-modal').classList.toggle('hidden');
+        }
+
+        // Dark mode toggle event
+        document.getElementById('dark-mode-toggle').addEventListener('change', toggleDarkMode);
+
+        // Quotes array
+        const quotes = [
+            "النجاح هو مجموع الجهود الصغيرة المتكررة يومياً",
+            "لا تيأس فعادة ما يكون آخر مفتاح في مجموعة المفاتيح هو المناسب",
+            "التميز ليس مهارة بل موقف، كن الأفضل في كل ما تفعل",
+            "الطموح هو الطريق إلى النجاح، والمثابرة هي السيارة التي توصلك",
+            "كلما زادت الصعوبات التي تواجهها، زادت الفرص التي تخلقها"
+        ];
+
+        function showQuote(index = null) {
+            // If no index provided, show random quote
+            const quoteIndex = index !== null ? index : Math.floor(Math.random() * quotes.length);
+            document.getElementById('quote-text').textContent = quotes[quoteIndex];
+            document.querySelectorAll('.quote-dot').forEach((dot, i) => {
+                dot.classList.toggle('opacity-30', i !== quoteIndex);
+            });
+        }
+
+        // Show random quote on page load
+        window.addEventListener('load', () => {
+            showQuote();
+        });
+
+        // Set Baccalaureate exam date (June 15, 2024)
+        const examDate = new Date('2024-06-15T00:00:00').getTime();
+        
+        // Update countdown every second
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = examDate - now;
+            
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display results
+            document.getElementById("countdown-days").innerHTML = days;
+            document.getElementById("countdown-hours").innerHTML = hours;
+            document.getElementById("countdown-minutes").innerHTML = minutes;
+            document.getElementById("countdown-seconds").innerHTML = seconds;
+            
+            // Update progress circle
+            const totalDays = Math.floor((examDate - new Date('2023-09-01T00:00:00').getTime()) / (1000 * 60 * 60 * 24));
+            const percentage = ((totalDays - days) / totalDays) * 100;
+            const circle = document.querySelector('.progress-ring__circle');
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = offset;
+            
+            // If countdown is finished
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("countdown").innerHTML = "لقد بدأت امتحانات البكالوريا!";
+            }
+        }, 1000);
+        
+        // Flip card functionality
+        document.querySelectorAll('.flip-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.querySelector('.flip-card-inner').classList.toggle('flipped');
+            });
+        });
+    </script>
+    <div class="text-center text-xs text-gray-500 py-4">
+        مطور من طرف 𝑼𝑵𝑲𝑵𝑶𝑾𝑵
+    </div>
 </body>
-</html>
+  </html>
